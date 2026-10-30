@@ -66,7 +66,7 @@ export class Dashboard {
     }
 
     if (this.cycleDay === ovulationDay) {
-      return 'Ovulação estimada';
+      return 'Ovulação';
     }
 
     return 'Lútea';

@@ -10,9 +10,9 @@
   <div class="calendar-layout">
     <section class="calendar-card">
       <div class="calendar-header">
-        <button (click)="previousMonth()">‹</button>
+        <button type="button" (click)="previousMonth()">‹</button>
         <h3>{{ monthName() }}</h3>
-        <button (click)="nextMonth()">›</button>
+        <button type="button" (click)="nextMonth()">›</button>
       </div>
 
       <div class="weekdays">
@@ -27,22 +27,38 @@
             <div class="empty-day"></div>
           } @else {
             <button
+              type="button"
               class="calendar-day"
               [class.today]="isToday(day)"
               [class.selected]="isSelected(day)"
               [class.period]="isPeriod(day)"
+              [class.fertile]="isFertile(day)"
+              [class.ovulation]="isOvulation(day)"
               (click)="selectDay(day)"
             >
-              {{ day }}
+              <span class="day-number">{{ day }}</span>
+
+              <span class="day-indicators">
+                @for (indicator of dayIndicators(day); track $index) {
+                  <span>{{ indicator }}</span>
+                }
+              </span>
             </button>
           }
         }
       </div>
 
       <div class="calendar-legend">
-        <span><i class="period-dot"></i> Menstruação (exemplo)</span>
+        <span><i class="period-dot"></i> Menstruação prevista</span>
+        <span><i class="fertile-dot"></i> Janela fértil estimada</span>
+        <span><i class="ovulation-dot"></i> Ovulação estimada</span>
         <span><i class="today-dot"></i> Hoje</span>
       </div>
+
+      <p class="prediction-note">
+        As previsões são estimativas baseadas nas configurações do seu ciclo.
+        Elas não confirmam ovulação nem indicam, isoladamente, dias seguros para evitar gravidez.
+      </p>
     </section>
 
     <aside class="day-details">
@@ -55,6 +71,20 @@
         }) }}
       </h3>
 
+      @if (isOvulation(selectedDate().getDate()) &&
+        currentDate().getMonth() === selectedDate().getMonth() &&
+        currentDate().getFullYear() === selectedDate().getFullYear()) {
+        <div class="prediction-message ovulation-message">
+          💜 Dia estimado da ovulação
+        </div>
+      } @else if (isFertile(selectedDate().getDate()) &&
+        currentDate().getMonth() === selectedDate().getMonth() &&
+        currentDate().getFullYear() === selectedDate().getFullYear()) {
+        <div class="prediction-message fertile-message">
+          🌸 Dia dentro da janela fértil estimada
+        </div>
+      }
+
       @if (showEntryForm()) {
         <app-entry-form
           [date]="selectedDateKey()"
@@ -66,7 +96,28 @@
         @if (selectedEntry(); as entry) {
           <div class="saved-entry">
             <p><strong>Fluxo:</strong> {{ flowLabel(entry.flow) }}</p>
-            <p><strong>Humor:</strong> {{ entry.mood || 'Não informado' }}</p>
+            <p>
+              <strong>Relações sexuais:</strong>
+              {{ entry.sexualActivity === 'yes' ? 'Sim' : 'Não' }}
+            </p>
+
+            @if (entry.sexualActivity === 'yes') {
+              <p>
+                <strong>Proteção:</strong>
+                {{ protectionLabel(entry.protectionMethod) }}
+              </p>
+            }
+
+            <p>
+              <strong>Anticoncepcional:</strong>
+              {{ contraceptiveLabel(entry.contraceptiveStatus) }}
+            </p>
+
+            <p>
+              <strong>Humor:</strong>
+              {{ entry.mood ? moodEmoji(entry.mood) + ' ' + entry.mood : 'Não informado' }}
+            </p>
+
             <p><strong>Dor:</strong> {{ entry.pain }}/10</p>
 
             @if (entry.symptoms.length > 0) {

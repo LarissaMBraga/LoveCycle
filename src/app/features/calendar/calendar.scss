@@ -1,10 +1,11 @@
-
 :host {
   display: block;
+  min-width: 0;
 }
 
 .calendar-page {
   color: #493d45;
+  min-width: 0;
 }
 
 .page-heading {
@@ -24,10 +25,12 @@
   display: grid;
   grid-template-columns: minmax(0, 1.8fr) minmax(240px, 1fr);
   gap: 22px;
+  align-items: start;
 }
 
 .calendar-card,
 .day-details {
+  min-width: 0;
   background: #fff;
   border: 1px solid #f0e8ec;
   border-radius: 20px;
@@ -38,14 +41,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 25px;
 
   h3 {
     text-transform: capitalize;
     font-size: 20px;
+    text-align: center;
   }
 
   button {
+    flex-shrink: 0;
     border: none;
     background: #f9edf3;
     color: #bd7897;
@@ -61,12 +67,12 @@
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 8px;
+  gap: 6px;
   text-align: center;
 }
 
 .weekdays {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 
   span {
     color: #a99aa3;
@@ -75,12 +81,19 @@
 }
 
 .calendar-day {
-  aspect-ratio: 1;
-  border: none;
+  position: relative;
+  min-width: 0;
+  min-height: 62px;
+  padding: 6px 2px;
+  border: 1px solid transparent;
   border-radius: 12px;
   background: transparent;
   color: #655660;
-  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
   cursor: pointer;
   transition: 0.2s;
 
@@ -89,8 +102,20 @@
   }
 
   &.period {
-    background: #f6dce8;
+    background: #fff0f3;
     color: #a34f77;
+  }
+
+  &.fertile {
+    background: #f7f0fc;
+    color: #8252a6;
+  }
+
+  &.ovulation {
+    background: #e9d8f7;
+    border-color: #b58ad8;
+    color: #70449a;
+    font-weight: 700;
   }
 
   &.today {
@@ -100,37 +125,72 @@
 
   &.selected {
     background: #bd7897;
-    color: white;
+    color: #fff;
+    border-color: #bd7897;
   }
+}
+
+.day-number {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.day-indicators {
+  min-height: 15px;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  font-size: 10px;
+  line-height: 13px;
+  overflow: hidden;
 }
 
 .calendar-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 13px 20px;
   margin-top: 25px;
   font-size: 12px;
   color: #968791;
-}
 
-.calendar-legend span {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
+  span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
 
-.calendar-legend i {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
+  i {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    border-radius: 50%;
+  }
 }
 
 .period-dot {
   background: #e6a9c4;
 }
 
+.fertile-dot {
+  background: #d8bce9;
+}
+
+.ovulation-dot {
+  background: #a978ce;
+}
+
 .today-dot {
   border: 2px solid #bd7897;
+}
+
+.prediction-note {
+  margin-top: 20px;
+  color: #a89ba2;
+  font-size: 11px;
+  line-height: 1.6;
 }
 
 .day-details {
@@ -143,15 +203,41 @@
   p:not(.eyebrow) {
     color: #968791;
     font-size: 14px;
+    line-height: 1.6;
   }
 }
 
-.period-message {
-  background: #f9edf3;
+.saved-entry {
+  background: #fdf9fb;
+  border-radius: 14px;
   padding: 15px;
+  overflow-wrap: anywhere;
+
+  p {
+    margin: 8px 0;
+  }
+
+  strong {
+    color: #655660;
+  }
+}
+
+.prediction-message {
+  padding: 13px;
   border-radius: 12px;
-  color: #a35e7f;
-  font-size: 14px;
+  margin: 15px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ovulation-message {
+  background: #f0e5fa;
+  color: #8252a6;
+}
+
+.fertile-message {
+  background: #f7f0fc;
+  color: #9065b1;
 }
 
 .register-button {
@@ -172,6 +258,64 @@
 
 @media (max-width: 900px) {
   .calendar-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .page-heading h2 {
+    font-size: 23px;
+  }
+
+  .calendar-card,
+  .day-details {
+    padding: 16px 12px;
+    border-radius: 16px;
+  }
+
+  .calendar-header {
+    margin-bottom: 18px;
+
+    h3 {
+      font-size: 17px;
+    }
+
+    button {
+      width: 34px;
+      height: 34px;
+    }
+  }
+
+  .weekdays,
+  .calendar-grid {
+    gap: 3px;
+  }
+
+  .weekdays span {
+    font-size: 11px;
+  }
+
+  .calendar-day {
+    min-height: 53px;
+    padding: 5px 1px;
+    border-radius: 9px;
+  }
+
+  .day-number {
+    font-size: 12px;
+  }
+
+  .day-indicators {
+    font-size: 8px;
+    line-height: 10px;
+  }
+
+  .calendar-legend {
+    gap: 10px 13px;
+    font-size: 10px;
+  }
+
+  .prediction-note {
+    font-size: 10px;
   }
 }

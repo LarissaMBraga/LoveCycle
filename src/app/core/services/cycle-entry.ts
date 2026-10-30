@@ -10,8 +10,12 @@ export class CycleEntryService {
   entries = signal<CycleEntry[]>(this.loadEntries());
 
   private loadEntries(): CycleEntry[] {
-    const saved = localStorage.getItem(this.storageKey);
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem(this.storageKey);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
   }
 
   private saveEntries(): void {
