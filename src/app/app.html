@@ -7,19 +7,23 @@
 
     <nav class="navigation">
       <a class="nav-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <span>⌂</span> Dashboard
+        <span>⌂</span>
+        <span class="nav-label">Dashboard</span>
       </a>
 
       <a class="nav-item" routerLink="/calendar" routerLinkActive="active">
-        <span>▦</span> Calendário
+        <span>▦</span>
+        <span class="nav-label">Calendário</span>
       </a>
 
       <a class="nav-item" routerLink="/cycle" routerLinkActive="active">
-        <span>◉</span> Meu ciclo
+        <span>◉</span>
+        <span class="nav-label">Meu ciclo</span>
       </a>
 
       <a class="nav-item" routerLink="/notes" routerLinkActive="active">
-        <span>✎</span> Anotações
+        <span>✎</span>
+        <span class="nav-label">Anotações</span>
       </a>
     </nav>
 
@@ -42,4 +46,26 @@
 
     <router-outlet></router-outlet>
   </main>
+
+  <nav class="mobile-navigation">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <span>⌂</span>
+      <small>Início</small>
+    </a>
+
+    <a routerLink="/calendar" routerLinkActive="active">
+      <span>▦</span>
+      <small>Calendário</small>
+    </a>
+
+    <a routerLink="/cycle" routerLinkActive="active">
+      <span>◉</span>
+      <small>Ciclo</small>
+    </a>
+
+    <a routerLink="/notes" routerLinkActive="active">
+      <span>✎</span>
+      <small>Anotações</small>
+    </a>
+  </nav>
 </div>
