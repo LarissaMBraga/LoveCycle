@@ -1,0 +1,121 @@
+<section class="cycle-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">CONHEÇA SEU CORPO</p>
+      <h2>Meu ciclo 🌷</h2>
+      <p>Suas informações e configurações menstruais.</p>
+    </div>
+  </div>
+
+  <section class="cycle-highlight">
+    <div>
+      <p class="eyebrow">PRÓXIMA MENSTRUAÇÃO</p>
+
+      @if (nextPeriod) {
+        <h2>{{ nextPeriod }}</h2>
+
+        @if (remainingDays !== null && remainingDays > 0) {
+          <p>Previsão em {{ remainingDays }} dias</p>
+        } @else if (remainingDays !== null) {
+          <p>Data prevista já alcançada.</p>
+        }
+      } @else {
+        <h2>Vamos começar?</h2>
+        <p>Configure seu ciclo para visualizar suas previsões.</p>
+      }
+    </div>
+
+    <div class="cycle-flower">🌸</div>
+  </section>
+
+  <div class="cycle-content">
+    <section class="cycle-card">
+      <div class="section-title">
+        <span>♡</span>
+        <div>
+          <h3>Configurações do ciclo</h3>
+          <p>Conte um pouquinho sobre seu ciclo.</p>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="lastPeriod">Início da última menstruação</label>
+        <input
+          id="lastPeriod"
+          type="date"
+          [(ngModel)]="lastPeriodStart"
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="cycleLength">Duração média do ciclo</label>
+        <div class="input-with-unit">
+          <input
+            id="cycleLength"
+            type="number"
+            min="15"
+            max="60"
+            [(ngModel)]="cycleLength"
+          />
+          <span>dias</span>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="periodLength">Duração média da menstruação</label>
+        <div class="input-with-unit">
+          <input
+            id="periodLength"
+            type="number"
+            min="1"
+            max="15"
+            [(ngModel)]="periodLength"
+          />
+          <span>dias</span>
+        </div>
+      </div>
+
+      <button
+        class="save-cycle-button"
+        (click)="saveSettings()"
+        [disabled]="!lastPeriodStart || cycleLength < 15 || cycleLength > 60 || periodLength < 1 || periodLength > 15"
+      >
+        Salvar configurações
+      </button>
+
+      @if (saved) {
+        <p class="success-message">♡ Configurações salvas com sucesso!</p>
+      }
+    </section>
+
+    <section class="cycle-card cycle-info">
+      <div class="section-title">
+        <span>✧</span>
+        <div>
+          <h3>Sobre seu ciclo</h3>
+          <p>Algumas informações importantes.</p>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <span>Duração do ciclo</span>
+        <strong>{{ cycleLength }} dias</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Duração da menstruação</span>
+        <strong>{{ periodLength }} dias</strong>
+      </div>
+
+      <div class="info-row">
+        <span>Última menstruação</span>
+        <strong>{{ lastPeriodStart ? (lastPeriodStart | date:'dd/MM/yyyy') : 'Não informada' }}</strong>
+      </div>
+
+      <div class="cycle-note">
+        🌷 As datas são estimativas baseadas nas informações registradas.
+        Seu ciclo pode variar de um mês para outro.
+      </div>
+    </section>
+  </div>
+</section>

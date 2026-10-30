@@ -1,0 +1,90 @@
+<section class="calendar-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">ACOMPANHE SEU CORPO</p>
+      <h2>Meu calendário 🌷</h2>
+      <p>Visualize seu ciclo e registre seus dias.</p>
+    </div>
+  </div>
+
+  <div class="calendar-layout">
+    <section class="calendar-card">
+      <div class="calendar-header">
+        <button (click)="previousMonth()">‹</button>
+        <h3>{{ monthName() }}</h3>
+        <button (click)="nextMonth()">›</button>
+      </div>
+
+      <div class="weekdays">
+        @for (weekday of ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']; track weekday) {
+          <span>{{ weekday }}</span>
+        }
+      </div>
+
+      <div class="calendar-grid">
+        @for (day of days(); track $index) {
+          @if (day === null) {
+            <div class="empty-day"></div>
+          } @else {
+            <button
+              class="calendar-day"
+              [class.today]="isToday(day)"
+              [class.selected]="isSelected(day)"
+              [class.period]="isPeriod(day)"
+              (click)="selectDay(day)"
+            >
+              {{ day }}
+            </button>
+          }
+        }
+      </div>
+
+      <div class="calendar-legend">
+        <span><i class="period-dot"></i> Menstruação (exemplo)</span>
+        <span><i class="today-dot"></i> Hoje</span>
+      </div>
+    </section>
+
+    <aside class="day-details">
+      <p class="eyebrow">DIA SELECIONADO</p>
+
+      <h3>
+        {{ selectedDate().toLocaleDateString('pt-BR', {
+          day: 'numeric',
+          month: 'long'
+        }) }}
+      </h3>
+
+      @if (showEntryForm()) {
+        <app-entry-form
+          [date]="selectedDateKey()"
+          [initialEntry]="selectedEntry()"
+          (saved)="saveEntry($event)"
+          (cancelled)="closeEntryForm()"
+        />
+      } @else {
+        @if (selectedEntry(); as entry) {
+          <div class="saved-entry">
+            <p><strong>Fluxo:</strong> {{ flowLabel(entry.flow) }}</p>
+            <p><strong>Humor:</strong> {{ entry.mood || 'Não informado' }}</p>
+            <p><strong>Dor:</strong> {{ entry.pain }}/10</p>
+
+            @if (entry.symptoms.length > 0) {
+              <p><strong>Sintomas:</strong> {{ entry.symptoms.join(', ') }}</p>
+            }
+
+            @if (entry.notes) {
+              <p><strong>Observações:</strong> {{ entry.notes }}</p>
+            }
+          </div>
+        } @else {
+          <p>Nenhum registro para este dia.</p>
+        }
+
+        <button class="register-button" (click)="openEntryForm()">
+          {{ selectedEntry() ? '✎ Editar registro' : '+ Adicionar registro' }}
+        </button>
+      }
+    </aside>
+  </div>
+</section>

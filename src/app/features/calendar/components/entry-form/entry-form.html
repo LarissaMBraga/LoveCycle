@@ -1,0 +1,90 @@
+
+<div class="form-container">
+  <div class="form-header">
+    <div>
+      <p class="eyebrow">SEU DIÁRIO</p>
+      <h2>Como você está? 🌷</h2>
+      <p>{{ date }}</p>
+    </div>
+    <button class="close-button" (click)="cancelled.emit()">×</button>
+  </div>
+
+  <form (ngSubmit)="submit()">
+    <section class="form-section">
+      <label>Fluxo menstrual</label>
+      <div class="option-grid">
+        @for (option of [
+          {value: 'none', label: 'Nenhum'},
+          {value: 'light', label: 'Leve'},
+          {value: 'medium', label: 'Moderado'},
+          {value: 'heavy', label: 'Intenso'}
+        ]; track option.value) {
+          <button
+            type="button"
+            class="option-button"
+            [class.active]="flow === option.value"
+            (click)="flow = $any(option.value)"
+          >
+            {{ option.label }}
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="form-section">
+      <label>Sintomas</label>
+      <div class="symptom-grid">
+        @for (symptom of symptomOptions; track symptom) {
+          <button
+            type="button"
+            class="symptom-button"
+            [class.active]="symptoms.includes(symptom)"
+            (click)="toggleSymptom(symptom)"
+          >
+            {{ symptom }}
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="form-section">
+      <label>Como está seu humor?</label>
+      <select name="mood" [(ngModel)]="mood">
+        <option value="">Selecione</option>
+        @for (option of moodOptions; track option) {
+          <option [value]="option">{{ option }}</option>
+        }
+      </select>
+    </section>
+
+    <section class="form-section">
+      <label>Intensidade da dor: {{ pain }}/10</label>
+      <input
+        type="range"
+        name="pain"
+        min="0"
+        max="10"
+        [(ngModel)]="pain"
+      />
+    </section>
+
+    <section class="form-section">
+      <label>Observações</label>
+      <textarea
+        name="notes"
+        [(ngModel)]="notes"
+        placeholder="Como foi seu dia? Quer registrar alguma coisa?"
+        rows="4"
+      ></textarea>
+    </section>
+
+    <div class="form-actions">
+      <button type="button" class="cancel-button" (click)="cancelled.emit()">
+        Cancelar
+      </button>
+      <button type="submit" class="save-button">
+        Salvar registro
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,123 @@
+<section class="welcome-card">
+  <div>
+    <p class="eyebrow">ACOMPANHAMENTO DO CICLO</p>
+    <h2>Conheça melhor seu corpo.</h2>
+    <p>Um espaço para acompanhar seu ciclo e cuidar de você.</p>
+  </div>
+
+  <div class="flower">🌸</div>
+</section>
+
+<section class="dashboard-grid">
+  <article class="info-card">
+    <span class="card-icon">🌙</span>
+    <p>Fase atual</p>
+
+    @if (hasCycleData) {
+      <h3>{{ currentPhase }}</h3>
+      <small>Dia {{ cycleDay }} do ciclo</small>
+    } @else {
+      <h3>Configurar ciclo</h3>
+      <small>
+        <a routerLink="/cycle">Adicionar data da última menstruação →</a>
+      </small>
+    }
+  </article>
+
+  <article class="info-card">
+    <span class="card-icon">🩷</span>
+    <p>Próxima menstruação</p>
+
+    @if (hasCycleData) {
+      <h3>
+        @if (daysUntilNextPeriod === 1) {
+          Amanhã
+        } @else {
+          Em {{ daysUntilNextPeriod }} dias
+        }
+      </h3>
+      <small>Previsão: {{ nextPeriodDate }}</small>
+    } @else {
+      <h3>Adicionar informação</h3>
+      <small>
+        <a routerLink="/cycle">Configurar previsão →</a>
+      </small>
+    }
+  </article>
+
+  <article class="info-card">
+    <span class="card-icon">✨</span>
+    <p>Seu ciclo</p>
+
+    @if (hasCycleData) {
+      <h3>{{ cycleLength }} dias</h3>
+      <small>Duração configurada</small>
+    } @else {
+      <h3>Adicionar informação</h3>
+      <small>
+        <a routerLink="/cycle">Definir duração →</a>
+      </small>
+    }
+  </article>
+</section>
+
+<section class="dashboard-grid">
+  <article class="info-card">
+    <span class="card-icon">🌼</span>
+    <p>Ovulação estimada</p>
+
+    @if (hasCycleData) {
+      <h3>{{ ovulationDate }}</h3>
+      <small>Previsão aproximada</small>
+    } @else {
+      <h3>Adicionar informação</h3>
+      <small>
+        <a routerLink="/cycle">Configurar ciclo →</a>
+      </small>
+    }
+  </article>
+
+  <article class="info-card">
+    <span class="card-icon">🌷</span>
+    <p>Janela fértil estimada</p>
+
+    @if (hasCycleData) {
+      <h3>{{ fertileStartDate }} a {{ fertileEndDate }}</h3>
+      <small>Período aproximado</small>
+    } @else {
+      <h3>Adicionar informação</h3>
+      <small>
+        <a routerLink="/cycle">Configurar ciclo →</a>
+      </small>
+    }
+  </article>
+
+  <article class="info-card">
+    <span class="card-icon">🩸</span>
+    <p>Duração da menstruação</p>
+
+    @if (hasCycleData) {
+      <h3>{{ periodLength }} dias</h3>
+      <small>Duração configurada</small>
+    } @else {
+      <h3>Adicionar informação</h3>
+      <small>
+        <a routerLink="/cycle">Definir duração →</a>
+      </small>
+    }
+  </article>
+</section>
+
+<section class="bottom-grid">
+  <article class="content-card">
+    <h3>Seu calendário</h3>
+    <p>Acompanhe seus registros menstruais, sintomas e humor.</p>
+    <a routerLink="/calendar">Abrir calendário →</a>
+  </article>
+
+  <article class="content-card">
+    <h3>Suas anotações</h3>
+    <p>Registre sintomas, sentimentos e observações.</p>
+    <a routerLink="/notes">Ver anotações →</a>
+  </article>
+</section>

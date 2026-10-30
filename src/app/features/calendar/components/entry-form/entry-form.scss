@@ -1,0 +1,114 @@
+
+:host {
+  display: block;
+}
+
+.form-container {
+  background: #fff;
+  border-radius: 20px;
+  padding: 25px;
+  border: 1px solid #f0e8ec;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 25px;
+
+  h2 {
+    margin: 8px 0;
+    font-size: 23px;
+  }
+
+  p:last-child {
+    color: #968791;
+    font-size: 13px;
+  }
+}
+
+.close-button {
+  border: none;
+  background: #f9edf3;
+  color: #bd7897;
+  border-radius: 10px;
+  width: 35px;
+  height: 35px;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.form-section {
+  margin-bottom: 23px;
+
+  label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  select,
+  textarea {
+    width: 100%;
+    border: 1px solid #eee2e9;
+    border-radius: 10px;
+    padding: 12px;
+    font: inherit;
+    color: #493d45;
+    background: #fff;
+  }
+
+  input[type='range'] {
+    width: 100%;
+    accent-color: #bd7897;
+  }
+}
+
+.option-grid,
+.symptom-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.option-button,
+.symptom-button {
+  padding: 10px 13px;
+  border: 1px solid #eee2e9;
+  border-radius: 10px;
+  background: #fff;
+  color: #897b84;
+  cursor: pointer;
+}
+
+.option-button.active,
+.symptom-button.active {
+  background: #f9edf3;
+  border-color: #bd7897;
+  color: #a35e7f;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  button {
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+}
+
+.cancel-button {
+  background: #fff;
+  border: 1px solid #eee2e9;
+  color: #897b84;
+}
+
+.save-button {
+  background: #bd7897;
+  border: none;
+  color: #fff;
+}

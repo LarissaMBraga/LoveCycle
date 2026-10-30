@@ -1,0 +1,132 @@
+<section class="notes-page">
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">SEU ESPAÇO PESSOAL</p>
+      <h2>Minhas anotações ✨</h2>
+      <p>Um diário para registrar tudo o que você sente.</p>
+    </div>
+
+    <button class="new-note-button" (click)="openForm()">
+      + Nova anotação
+    </button>
+  </div>
+
+  @if (showForm) {
+    <section class="note-form-card">
+      <div class="form-heading">
+        <h3>{{ editingId !== null ? 'Editar anotação' : 'Nova anotação' }}</h3>
+        <button class="close-button" (click)="closeForm()">×</button>
+      </div>
+
+      <div class="form-field">
+        <label for="noteTitle">Título</label>
+        <input
+          id="noteTitle"
+          type="text"
+          [(ngModel)]="title"
+          placeholder="Ex.: Como me senti hoje"
+        />
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="noteCategory">Categoria</label>
+          <select id="noteCategory" [(ngModel)]="category">
+            @for (item of categories.slice(1); track item) {
+              <option [value]="item">{{ item }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="noteDate">Data</label>
+          <input
+            id="noteDate"
+            type="date"
+            [(ngModel)]="date"
+          />
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="noteContent">Sua anotação</label>
+        <textarea
+          id="noteContent"
+          [(ngModel)]="content"
+          rows="5"
+          placeholder="Escreva aqui..."
+        ></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button class="cancel-button" (click)="closeForm()">Cancelar</button>
+        <button
+          class="save-button"
+          (click)="saveNote()"
+          [disabled]="!title.trim() || !content.trim() || !date"
+        >
+          Salvar anotação
+        </button>
+      </div>
+    </section>
+  }
+
+  <div class="notes-toolbar">
+    <div class="search-box">
+      <span>⌕</span>
+      <input
+        type="search"
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar anotações..."
+      />
+    </div>
+
+    <select [(ngModel)]="selectedCategory" class="category-filter">
+      @for (item of categories; track item) {
+        <option [value]="item">{{ item }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="notes-count">
+    {{ filteredNotes.length }}
+    {{ filteredNotes.length === 1 ? 'anotação encontrada' : 'anotações encontradas' }}
+  </div>
+
+  @if (filteredNotes.length > 0) {
+    <div class="notes-grid">
+      @for (note of filteredNotes; track note.id) {
+        <article class="note-card">
+          <div class="note-card-header">
+            <span class="note-category">{{ note.category }}</span>
+
+            <div class="note-actions">
+              <button (click)="editNote(note)" title="Editar">✎</button>
+              <button (click)="deleteNote(note.id)" title="Excluir">×</button>
+            </div>
+          </div>
+
+          <h3>{{ note.title }}</h3>
+          <p class="note-content">{{ note.content }}</p>
+
+          <div class="note-footer">
+            <span>♡</span>
+            <time>{{ note.date + 'T12:00:00' | date:'dd/MM/yyyy' }}</time>
+          </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <section class="empty-notes">
+      <span>📖</span>
+      <h3>Nenhuma anotação encontrada</h3>
+      <p>Que tal registrar como você está se sentindo hoje?</p>
+
+      @if (!searchTerm && selectedCategory === 'Todas') {
+        <button class="new-note-button" (click)="openForm()">
+          Criar primeira anotação
+        </button>
+      }
+    </section>
+  }
+</section>
