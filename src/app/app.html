@@ -1,3 +1,4 @@
+
 <div class="app-container">
   <aside class="sidebar">
     <div class="brand">
@@ -39,12 +40,107 @@
         <h1>Olá! Como você está hoje?</h1>
       </div>
 
-      <div class="profile">
-        <span>LC</span>
+      <div class="account-area">
+        <button
+          type="button"
+          class="account-button"
+          (click)="toggleMenu()"
+          [attr.aria-expanded]="menuOpen()"
+          aria-label="Abrir opções da conta"
+        >
+          <span class="profile">
+            @if (user()?.photoURL) {
+              <img [src]="user()!.photoURL" alt="Foto do perfil" />
+            } @else {
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6" />
+                <path d="M4.5 21C4.5 16.9 7.85 14 12 14s7.5 2.9 7.5 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+            }
+          </span>
+
+          <span class="account-label">
+            @if (user()) {
+              {{ user()?.displayName || user()?.email }}
+            } @else {
+              Login / Registro
+            }
+          </span>
+
+          <span class="account-chevron">⌄</span>
+        </button>
+
+        @if (menuOpen()) {
+          <div class="account-menu">
+            @if (user(); as currentUser) {
+              <div class="account-menu-info">
+                <strong>{{ currentUser.displayName || 'Minha conta' }}</strong>
+                <small>{{ currentUser.email }}</small>
+              </div>
+
+              <button type="button" class="account-menu-item logout-item" (click)="logout()">
+                Sair da conta
+              </button>
+            } @else {
+              <div class="account-menu-info">
+                <strong>Bem-vinda ao LoveCycle!</strong>
+                <small>Entre ou crie sua conta para começar.</small>
+              </div>
+
+              <a
+                routerLink="/login"
+                class="account-menu-item"
+                (click)="closeMenu()"
+              >
+                Entrar ou criar conta
+              </a>
+
+              <button
+                type="button"
+                class="account-menu-item guest-item"
+                (click)="closeMenu()"
+              >
+                Continuar sem conta
+              </button>
+            }
+          </div>
+        }
       </div>
     </header>
 
     <router-outlet></router-outlet>
+
+    <footer class="app-footer">
+      <div class="footer-credit">
+        <span>Desenvolvido por</span>
+        <strong>Larissa Moreira Braga</strong>
+        <span class="footer-heart">♡</span>
+      </div>
+
+      <nav class="footer-links" aria-label="Links da desenvolvedora">
+        <a href="https://github.com/LarissaMBraga/LoveCycle"
+           target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+
+        <span>·</span>
+
+        <a href="https://larissabraga.dev/"
+           target="_blank" rel="noopener noreferrer">
+          Portfólio
+        </a>
+
+        <span>·</span>
+
+        <a href="mailto:larissambraga2005@gmail.com">
+          E-mail
+        </a>
+      </nav>
+
+      <p class="footer-copyright">
+        © 2026 LoveCycle. Todos os direitos reservados.
+      </p>
+    </footer>
   </main>
 
   <nav class="mobile-navigation">

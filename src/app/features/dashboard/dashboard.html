@@ -1,3 +1,4 @@
+
 <section class="welcome-card">
   <div>
     <p class="eyebrow">ACOMPANHAMENTO DO CICLO</p>
@@ -36,11 +37,11 @@
           Em {{ daysUntilNextPeriod }} dias
         }
       </h3>
-      <small>Previsão: {{ nextPeriodDate }}</small>
+      <small>Data: {{ nextPeriodDate }}</small>
     } @else {
       <h3>Adicionar informação</h3>
       <small>
-        <a routerLink="/cycle">Configurar previsão →</a>
+        <a routerLink="/cycle">Configurar ciclo →</a>
       </small>
     }
   </article>
@@ -59,16 +60,14 @@
       </small>
     }
   </article>
-</section>
 
-<section class="dashboard-grid">
   <article class="info-card">
     <span class="card-icon">🌼</span>
-    <p>Ovulação estimada</p>
+    <p>Ovulação</p>
 
     @if (hasCycleData) {
       <h3>{{ ovulationDate }}</h3>
-      <small>Previsão aproximada</small>
+      <small>Data aproximada</small>
     } @else {
       <h3>Adicionar informação</h3>
       <small>
@@ -79,7 +78,7 @@
 
   <article class="info-card">
     <span class="card-icon">🌷</span>
-    <p>Janela fértil estimada</p>
+    <p>Janela fértil</p>
 
     @if (hasCycleData) {
       <h3>{{ fertileStartDate }} a {{ fertileEndDate }}</h3>
@@ -105,19 +104,5 @@
         <a routerLink="/cycle">Definir duração →</a>
       </small>
     }
-  </article>
-</section>
-
-<section class="bottom-grid">
-  <article class="content-card">
-    <h3>Seu calendário</h3>
-    <p>Acompanhe seus registros menstruais, sintomas e humor.</p>
-    <a routerLink="/calendar">Abrir calendário →</a>
-  </article>
-
-  <article class="content-card">
-    <h3>Suas anotações</h3>
-    <p>Registre sintomas, sentimentos e observações.</p>
-    <a routerLink="/notes">Ver anotações →</a>
   </article>
 </section>

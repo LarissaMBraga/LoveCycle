@@ -1,0 +1,39 @@
+mutation CreateDemoData @transaction @auth(expr: "auth.token.admin == true") {
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      authProvider: "google",
+      email: "user1@example.com"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440002",
+      authProvider: "password",
+      email: "user2@example.com"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440003",
+      authProvider: "apple",
+      email: "user3@example.com"
+    }
+  ])
+  userProfile_insertMany(data: [
+    { userId: "550e8400-e29b-41d4-a716-446655440001", averageCycleLength: 28, averagePeriodLength: 5, cycleTrackingGoal: "track-period" },
+    { userId: "550e8400-e29b-41d4-a716-446655440002", averageCycleLength: 30, averagePeriodLength: 4, cycleTrackingGoal: "conceive" },
+    { userId: "550e8400-e29b-41d4-a716-446655440003", averageCycleLength: 29, averagePeriodLength: 6, cycleTrackingGoal: "avoid-pregnancy" }
+  ])
+  cycle_insertMany(data: [
+    { id: "c50e8400-e29b-41d4-a716-446655440001", userId: "550e8400-e29b-41d4-a716-446655440001", startDate: "2023-10-01", predictedLength: 28 },
+    { id: "c50e8400-e29b-41d4-a716-446655440002", userId: "550e8400-e29b-41d4-a716-446655440002", startDate: "2023-10-05", predictedLength: 30 },
+    { id: "c50e8400-e29b-41d4-a716-446655440003", userId: "550e8400-e29b-41d4-a716-446655440003", startDate: "2023-10-10", predictedLength: 29 }
+  ])
+  dailyLog_insertMany(data: [
+    { userId: "550e8400-e29b-41d4-a716-446655440001", cycleId: "c50e8400-e29b-41d4-a716-446655440001", date: "2023-10-01", mood: "happy", notes: "First day" },
+    { userId: "550e8400-e29b-41d4-a716-446655440002", cycleId: "c50e8400-e29b-41d4-a716-446655440002", date: "2023-10-05", mood: "tired", notes: "Period started" },
+    { userId: "550e8400-e29b-41d4-a716-446655440003", cycleId: "c50e8400-e29b-41d4-a716-446655440003", date: "2023-10-10", mood: "neutral", notes: "General update" }
+  ])
+  prediction_insertMany(data: [
+    { userId: "550e8400-e29b-41d4-a716-446655440001", cycleId: "c50e8400-e29b-41d4-a716-446655440001", type: "ovulation", date: "2023-10-14", confidenceScore: 0.85 },
+    { userId: "550e8400-e29b-41d4-a716-446655440002", cycleId: "c50e8400-e29b-41d4-a716-446655440002", type: "period", date: "2023-11-04", confidenceScore: 0.90 },
+    { userId: "550e8400-e29b-41d4-a716-446655440003", cycleId: "c50e8400-e29b-41d4-a716-446655440003", type: "ovulation", date: "2023-10-24", confidenceScore: 0.75 }
+  ])
+}

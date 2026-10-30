@@ -1,0 +1,148 @@
+
+<div class="login-page">
+  <div class="decoration decoration-one"></div>
+  <div class="decoration decoration-two"></div>
+
+  <section class="login-card">
+    <a routerLink="/" class="brand">
+      <span class="brand-icon">♡</span>
+      <span>LoveCycle</span>
+    </a>
+
+    <div class="welcome">
+      <span class="welcome-icon">🌷</span>
+
+      <p class="eyebrow">
+        {{ isRegisterMode ? 'SEU ESPAÇO COMEÇA AQUI' : 'BOM TER VOCÊ AQUI' }}
+      </p>
+
+      <h1>
+        {{ isRegisterMode ? 'Crie sua conta' : 'Bem-vinda de volta' }}
+      </h1>
+
+      <p class="subtitle">
+        {{
+          isRegisterMode
+            ? 'Crie sua conta para acompanhar seu ciclo e seus registros.'
+            : 'Entre na sua conta e continue acompanhando seu ciclo.'
+        }}
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="google-button"
+      (click)="loginWithGoogle()"
+      [disabled]="loading"
+    >
+      <span class="google-icon">G</span>
+      <span>Continuar com Google</span>
+    </button>
+
+    <div class="separator">
+      <span></span>
+      <small>ou continue com e-mail</small>
+      <span></span>
+    </div>
+
+    <form (ngSubmit)="submit()">
+      @if (isRegisterMode) {
+        <div class="form-group">
+          <label for="name">Nome</label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            [(ngModel)]="name"
+            placeholder="Como podemos te chamar?"
+            autocomplete="name"
+            required
+          />
+        </div>
+      }
+
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="seuemail@exemplo.com"
+          autocomplete="email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Mínimo de 6 caracteres"
+          [autocomplete]="isRegisterMode ? 'new-password' : 'current-password'"
+          minlength="6"
+          required
+        />
+      </div>
+
+      @if (isRegisterMode) {
+        <div class="form-group">
+          <label for="confirmPassword">Confirme sua senha</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="Digite sua senha novamente"
+            autocomplete="new-password"
+            required
+          />
+        </div>
+      }
+
+      @if (errorMessage) {
+        <div class="error-message" role="alert">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="loading || !email || !password || (isRegisterMode && (!name || !confirmPassword))"
+      >
+        @if (loading) {
+          <span class="spinner"></span>
+          Aguarde...
+        } @else {
+          {{ isRegisterMode ? 'Criar minha conta' : 'Entrar na minha conta' }}
+        }
+      </button>
+    </form>
+
+    <div class="switch-mode">
+      <span>
+        {{ isRegisterMode ? 'Já possui uma conta?' : 'Ainda não tem uma conta?' }}
+      </span>
+
+      <button
+        type="button"
+        (click)="toggleMode()"
+        [disabled]="loading"
+      >
+        {{ isRegisterMode ? 'Fazer login' : 'Criar conta' }}
+      </button>
+    </div>
+
+    <div class="guest-option">
+      <a routerLink="/">Continuar sem criar uma conta</a>
+    </div>
+
+    <p class="privacy-note">
+      Seus registros são pessoais. Cuide do seu ciclo no seu próprio tempo. ♡
+    </p>
+  </section>
+</div>

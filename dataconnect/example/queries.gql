@@ -1,0 +1,98 @@
+mutation CreateUserData @transaction @auth(level: USER) {
+  user_insert(data: {
+    id_expr: "auth.uid",
+    authProvider: "firebase",
+    email: "user@example.com"
+  })
+}
+
+mutation UpdateUserProfile @auth(level: USER) {
+  userProfile_update(
+    key: { id_expr: "auth.uid" },
+    data: { averageCycleLength: 28, averagePeriodLength: 5 }
+  )
+}
+
+mutation DeleteCycle($id: UUID!) @auth(level: USER) {
+  cycle_delete(key: { id: $id })
+}
+
+query GetCycle($id: UUID!) @auth(level: USER) {
+  cycle(id: $id) {
+    startDate
+    endDate
+    predictedLength
+  }
+}
+
+query ListMyCycles @auth(level: USER) {
+  cycles(where: { userId: { eq_expr: "auth.uid" } }) {
+    id
+    startDate
+    endDate
+  }
+}
+
+mutation CreateDailyLog($date: Date!, $mood: String) @auth(level: USER) {
+  dailyLog_insert(data: {
+    date: $date,
+    mood: $mood,
+    userId_expr: "auth.uid"
+  })
+}
+
+mutation UpdateDailyLog($id: UUID!, $notes: String) @auth(level: USER) {
+  dailyLog_update(key: { id: $id }, data: { notes: $notes })
+}
+
+mutation DeleteDailyLog($id: UUID!) @auth(level: USER) {
+  dailyLog_delete(key: { id: $id })
+}
+
+query GetDailyLog($id: UUID!) @auth(level: USER) {
+  dailyLog(id: $id) {
+    date
+    mood
+    notes
+  }
+}
+
+query ListMyLogs @auth(level: USER) {
+  dailyLogs(where: { userId: { eq_expr: "auth.uid" } }) {
+    id
+    date
+    mood
+  }
+}
+
+mutation InsertPrediction($type: String!, $date: Date) @auth(level: USER) {
+  prediction_insert(data: {
+    type: $type,
+    date: $date,
+    userId_expr: "auth.uid"
+  })
+}
+
+mutation UpdatePrediction($id: UUID!, $confidence: Float) @auth(level: USER) {
+  prediction_update(key: { id: $id }, data: { confidenceScore: $confidence })
+}
+
+mutation DeletePrediction($id: UUID!) @auth(level: USER) {
+  prediction_delete(key: { id: $id })
+}
+
+query GetPrediction($id: UUID!) @auth(level: USER) {
+  prediction(id: $id) {
+    type
+    date
+    confidenceScore
+  }
+}
+
+query ListMyPredictions @auth(level: USER) {
+  predictions(where: { userId: { eq_expr: "auth.uid" } }) {
+    id
+    type
+    date
+  }
+}

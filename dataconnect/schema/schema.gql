@@ -1,0 +1,38 @@
+type User @table {
+  authProvider: String!
+  email: String
+  createdAt: Timestamp
+}
+
+type UserProfile @table {
+  averageCycleLength: Int!
+  averagePeriodLength: Int!
+  cycleTrackingGoal: String
+  user: User!
+}
+
+type Cycle @table {
+  startDate: Date!
+  endDate: Date
+  predictedLength: Int
+  user: User!
+}
+
+type DailyLog @table {
+  date: Date!
+  mood: String
+  symptoms: [String]
+  notes: String
+  sexualActivity: Boolean
+  contraceptiveUsed: Boolean
+  user: User!
+  cycle: Cycle
+}
+
+type Prediction @table {
+  type: String!
+  date: Date
+  confidenceScore: Float
+  user: User!
+  cycle: Cycle
+}

@@ -1,15 +1,34 @@
 
 import { Routes } from '@angular/router';
 
-import { Dashboard } from './features/dashboard/dashboard';
-import { Calendar } from './features/calendar/calendar';
-import { Cycle } from './features/cycle/cycle';
-import { Notes } from './features/notes/notes';
-
 export const routes: Routes = [
-  { path: '', component: Dashboard },
-  { path: 'calendar', component: Calendar },
-  { path: 'cycle', component: Cycle },
-  { path: 'notes', component: Notes },
-  { path: '**', redirectTo: '' }
+  {
+    path: '',
+    loadComponent: () =>
+      import('./features/dashboard/dashboard').then(m => m.Dashboard),
+  },
+  {
+    path: 'calendar',
+    loadComponent: () =>
+      import('./features/calendar/calendar').then(m => m.Calendar),
+  },
+  {
+    path: 'cycle',
+    loadComponent: () =>
+      import('./features/cycle/cycle').then(m => m.Cycle),
+  },
+  {
+    path: 'notes',
+    loadComponent: () =>
+      import('./features/notes/notes').then(m => m.Notes),
+  },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./features/auth/login/login').then(m => m.Login),
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
